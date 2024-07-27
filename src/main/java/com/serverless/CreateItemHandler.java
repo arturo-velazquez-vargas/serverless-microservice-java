@@ -23,7 +23,7 @@ public class CreateItemHandler implements RequestHandler<APIGatewayProxyRequestE
 
     @Override
     public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent input, Context context) {
-        logger.info("Received request: {}", input.getBody());
+        logger.info("Received request : {}", input.getBody());
 
         try {
             ObjectMapper objectMapper = new ObjectMapper();
