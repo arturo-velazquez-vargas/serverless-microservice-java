@@ -1,0 +1,89 @@
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+
+# AWS SAM
+.aws-sam/
+
+# Logs
+*.log
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+out/
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# VS Code
+.vscode/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+
+# AWS credentials
+*.pem
+
+# Temporary files
+*.swp
+*~
+
+# Other configuration files
+*.env
+*.local
+*.bak
+
+# SAM build artifacts
+packaged.yaml
+
+# Ignore Eclipse project files
+.classpath
+.project
+.settings/
+
+# Ignore idea project files
+.idea
+*.iml
+
+# Ignore local environment settings
+.env.local
+
+# Ignore node modules if present
+node_modules/
+npm-debug.log
+yarn-error.log
+lerna-debug.log
+
+# Ignore the buildspec file, assuming you don't want to version control it
+buildspec.yml
+
+# Ignore AWS CodeBuild specific files
+codebuild/
+
+# MacOS system files
+.DS_Store
+
+# Windows system files
+Thumbs.db
