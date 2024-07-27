@@ -1,0 +1,141 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: >
+  serverless-microservice-java
+
+  Sample SAM Template for serverless-microservice-java
+
+Globals:
+  Function:
+    Timeout: 10
+
+Resources:
+  ItemsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: ItemsTable
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
+
+  CreateItemFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: com.serverless.CreateItemHandler::handleRequest
+      Runtime: java11
+      CodeUri: .
+      MemorySize: 512
+      Policies:
+        - Version: "2012-10-17"
+          Statement:
+            - Effect: "Allow"
+              Action:
+                - "dynamodb:PutItem"
+              Resource: !GetAtt ItemsTable.Arn
+      Environment:
+        Variables:
+          TABLE_NAME: ItemsTable
+      Events:
+        CreateItemApi:
+          Type: Api
+          Properties:
+            Path: /items
+            Method: post
+
+  GetItemFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: com.serverless.GetItemHandler::handleRequest
+      Runtime: java11
+      CodeUri: .
+      MemorySize: 512
+      Policies:
+        - Version: "2012-10-17"
+          Statement:
+            - Effect: "Allow"
+              Action:
+                - "dynamodb:GetItem"
+              Resource: !GetAtt ItemsTable.Arn
+      Environment:
+        Variables:
+          TABLE_NAME: ItemsTable
+      Events:
+        GetItemApi:
+          Type: Api
+          Properties:
+            Path: /items/{id}
+            Method: get
+
+  UpdateItemFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: com.serverless.UpdateItemHandler::handleRequest
+      Runtime: java11
+      CodeUri: .
+      MemorySize: 512
+      Policies:
+        - Version: "2012-10-17"
+          Statement:
+            - Effect: "Allow"
+              Action:
+                - "dynamodb:UpdateItem"
+              Resource: !GetAtt ItemsTable.Arn
+      Environment:
+        Variables:
+          TABLE_NAME: ItemsTable
+      Events:
+        UpdateItemApi:
+          Type: Api
+          Properties:
+            Path: /items/{id}
+            Method: put
+
+  DeleteItemFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: com.serverless.DeleteItemHandler::handleRequest
+      Runtime: java11
+      CodeUri: .
+      MemorySize: 512
+      Policies:
+        - Version: "2012-10-17"
+          Statement:
+            - Effect: "Allow"
+              Action:
+                - "dynamodb:DeleteItem"
+              Resource: !GetAtt ItemsTable.Arn
+      Environment:
+        Variables:
+          TABLE_NAME: ItemsTable
+      Events:
+        DeleteItemApi:
+          Type: Api
+          Properties:
+            Path: /items/{id}
+            Method: delete
+
+Outputs:
+  CreateItemFunction:
+    Description: "Create Item Lambda Function ARN"
+    Value: !GetAtt CreateItemFunction.Arn
+  GetItemFunction:
+    Description: "Get Item Lambda Function ARN"
+    Value: !GetAtt GetItemFunction.Arn
+  UpdateItemFunction:
+    Description: "Update Item Lambda Function ARN"
+    Value: !GetAtt UpdateItemFunction.Arn
+  DeleteItemFunction:
+    Description: "Delete Item Lambda Function ARN"
+    Value: !GetAtt DeleteItemFunction.Arn
+  ItemsTable:
+    Description: "DynamoDB Table ARN"
+    Value: !GetAtt ItemsTable.Arn
+  ApiGatewayInvokeURL:
+    Description: "API Gateway base URL"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"

@@ -1,0 +1,22 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto11
+    commands:
+      - echo Installing Maven
+      - apt-get update
+      - apt-get install -y maven
+  build:
+    commands:
+      - echo Build started on `date`
+      - mvn clean package
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - sam package --template-file template.yaml --s3-bucket serverless-microservice-java --output-template-file packaged.yaml
+artifacts:
+  files:
+    - packaged.yaml
+    - target/serverless-microservice-java-1.0.jar

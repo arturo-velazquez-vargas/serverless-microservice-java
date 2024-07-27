@@ -1,0 +1,12 @@
+version = 0.1
+
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "serverless-microservice-java-stack"
+s3_bucket = "metaphorce-serverless"
+s3_prefix = "serverless-microservice-java-stack"
+region = "us-east-1"
+capabilities = "CAPABILITY_IAM"
+confirm_changeset = true
+resolve_s3 = true
+image_repositories = []

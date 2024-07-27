@@ -1,0 +1,4 @@
+com/serverless/CreateItemHandler.class
+com/serverless/UpdateItemHandler.class
+com/serverless/GetItemHandler.class
+com/serverless/DeleteItemHandler.class
